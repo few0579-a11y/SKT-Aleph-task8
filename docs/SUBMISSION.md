@@ -2,7 +2,7 @@
 
 **결과물 URL**: https://skt-aleph-task8.vercel.app
 
-**소스 URL**: https://github.com/few0579-a11y/SKT-Aleph-task8/commit/`(제출 직전 마지막 커밋 해시)`
+**소스 URL**: https://github.com/few0579-a11y/SKT-Aleph-task8/commit/a3597a726c6b0d672725e6022f9694b67c755a95
 
 **인증 구현 설명서**: https://github.com/few0579-a11y/SKT-Aleph-task8/blob/main/docs/AUTH.md (①–⑥)
 **확인 기록**: https://github.com/few0579-a11y/SKT-Aleph-task8/blob/main/docs/EVIDENCE.md
