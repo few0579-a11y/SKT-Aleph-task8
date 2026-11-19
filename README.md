@@ -13,7 +13,10 @@
 | `lib/webauthn.mjs` | RP ID·출처 설정, 가입 코드 확인, 패스키 이름(저장 위치) |
 | `lib/session.mjs` | 세션 쿠키(무작위 값, DB에는 해시만) |
 | `db/t08-role.sql`, `db/t08-schema.sql` | Supabase `t08` 스키마와 전용 역할 `t08_app` |
-| `scripts/test-register.mjs`, `scripts/test-login.mjs` | 시험용 소프트웨어 인증기로 등록·로그인 자동 확인(로컬) |
+| `scripts/test-register.mjs`, `test-login.mjs`, `test-passkeys.mjs`, `test-notes.mjs` | 시험용 소프트웨어 인증기로 등록·로그인·패스키 삭제·자료 차단 자동 확인(로컬, 58개) |
+| `scripts/console-evidence.js` | 배포 사이트에서 거절·통과 요청을 기록하는 콘솔 도우미 |
+| `vercel.json` | 배포 설정 + 보안 헤더(CSP 해시 포함) |
+| `docs/AUTH.md`, `docs/EVIDENCE.md` | 인증 구현 설명서(①–⑥), 배포 사이트 확인 기록 |
 | `api/router.js`, `server.mjs` | Vercel 함수 진입점 / 로컬 실행용 서버 |
 
 서명 검증(CBOR 해석·공개키 추출·서명 확인)은 `@simplewebauthn/server` 14.0.3에 맡기고,
