@@ -259,9 +259,9 @@ $('retroForm').addEventListener('submit', async (e) => {
   const f = e.currentTarget;
   const msg = $('retroMsg');
   msg.textContent = '저장 중…';
-  const { status, data } = await api('private/retros', {
+  const { status, data } = await api('private/notes', {
     method: 'POST',
-    body: JSON.stringify({ title: f.title.value, body: f.body.value }),
+    body: JSON.stringify({ kind: f.kind.value, title: f.title.value, body: f.body.value }),
   });
   if (status === 201) {
     f.reset();

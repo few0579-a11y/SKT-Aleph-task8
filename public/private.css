@@ -96,3 +96,4 @@
 .passkey-delete.armed { background: #8a3b12; color: #fff; border-color: #8a3b12; }
 .passkey-delete:disabled { opacity: .45; cursor: not-allowed; }
 .passkey-hint { margin: 0 0 12px; font-size: 13px; color: var(--muted); }
+.retro-form select { font: inherit; padding: 8px 10px; border: 1px solid var(--line); border-radius: 10px; background: var(--paper); }

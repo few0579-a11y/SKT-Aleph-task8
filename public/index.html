@@ -881,10 +881,17 @@ footer {
         <div id="privateLists" class="private-lists"></div>
 
         <form id="retroForm" class="retro-form">
-          <h3>새 회고 쓰기</h3>
+          <h3>새 항목 쓰기</h3>
+          <label>종류
+            <select name="kind">
+              <option value="retro">개인 회고</option>
+              <option value="project">프로젝트 메모</option>
+              <option value="apply">지원할 곳</option>
+            </select>
+          </label>
           <label>제목 <input name="title" maxlength="100" required></label>
           <label>내용 <textarea name="body" maxlength="2000" rows="4" required></textarea></label>
-          <button class="button" type="submit">회고 저장</button>
+          <button class="button" type="submit">저장</button>
           <p id="retroMsg" class="private-msg" role="status"></p>
         </form>
       </div>
