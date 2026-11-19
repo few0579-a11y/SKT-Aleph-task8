@@ -42,13 +42,20 @@ for (const c of pw) {
   else kinds.기타기호++;
 }
 console.log('글자 종류:', Object.entries(kinds).map(([k, n]) => `${k} ${n}`).join(', '));
-const s = postgres({ host: HOST, port: 6543, database: 'postgres', username: USER, password: pw, prepare: false, max: 1, connect_timeout: 10 });
-try {
-  const [r] = await s`select current_user as db_role, current_setting('search_path') as search_path`;
-  console.log(`접속 성공: db_role=${r.db_role}, search_path=${r.search_path}`);
-  console.log('→ Vercel DATABASE_URL의 PASSWORD 자리에 이 값을 그대로 넣으면 됩니다.');
-} catch (e) {
-  console.log(`접속 실패: ${e.code || ''} ${e.message}`);
-} finally {
-  await s.end({ timeout: 5 });
+// 같은 비밀번호로 세 경로를 시도한다: 풀러 transaction(6543, Vercel이 쓰는 곳) / 풀러 session(5432) / DB 직접(5432)
+const targets = [
+  { name: '풀러 transaction 6543 (Vercel)', host: HOST, port: 6543, username: USER },
+  { name: '풀러 session 5432', host: HOST, port: 5432, username: USER },
+  { name: 'DB 직접 5432', host: 'db.tdyzcxrerphpamyukaan.supabase.co', port: 5432, username: 't08_app' },
+];
+for (const t of targets) {
+  const s = postgres({ host: t.host, port: t.port, database: 'postgres', username: t.username, password: pw, prepare: false, max: 1, connect_timeout: 10 });
+  try {
+    const [r] = await s`select current_user as db_role, current_setting('search_path') as search_path`;
+    console.log(`[${t.name}] 접속 성공: db_role=${r.db_role}, search_path=${r.search_path}`);
+  } catch (e) {
+    console.log(`[${t.name}] 접속 실패: ${e.code || ''} ${e.message}`);
+  } finally {
+    await s.end({ timeout: 5 }).catch(() => {});
+  }
 }

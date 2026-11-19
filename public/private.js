@@ -151,16 +151,42 @@ async function loadPasskeys() {
   const { status, data } = await api('passkeys');
   const ul = $('passkeyList');
   if (status !== 200) return ul.replaceChildren(el('li', '패스키 목록을 불러오지 못했습니다.'));
+  const only = data.passkeys.length === 1;
   ul.replaceChildren(...data.passkeys.map((p) => {
     const li = el('li');
-    li.append(
+    const info = el('div');
+    info.append(
       el('strong', p.name),
       el('span', `등록 ${new Date(p.created_at).toLocaleString('ko-KR')}` +
         (p.last_used_at ? ` · 마지막 사용 ${new Date(p.last_used_at).toLocaleString('ko-KR')}` : '')),
     );
+    li.append(info, deleteButton(p, only));
     return li;
   }));
   if (!data.passkeys.length) ul.append(el('li', '등록된 패스키가 없습니다.'));
+  $('passkeyHint').textContent = only
+    ? '패스키가 하나뿐입니다. 이 기기를 잃어버리면 로그인할 수 없으니 다른 기기(예: 휴대폰)에 패스키를 하나 더 추가해 두세요. 마지막 패스키는 지울 수 없습니다.'
+    : `패스키 ${data.passkeys.length}개. 하나를 지워도 남은 패스키로 로그인할 수 있습니다.`;
+}
+
+// 삭제는 두 번 눌러야 한다(첫 클릭 → "정말 삭제" 확인). 브라우저 confirm 창 대신 화면 안에서 확인한다.
+function deleteButton(p, only) {
+  const b = el('button', '삭제');
+  b.type = 'button';
+  b.className = 'button secondary small passkey-delete';
+  if (only) { b.disabled = true; b.title = '마지막 남은 패스키는 지울 수 없습니다'; return b; }
+  let armed = false;
+  b.addEventListener('click', async () => {
+    if (!armed) { armed = true; b.textContent = '정말 삭제'; b.classList.add('armed'); return; }
+    b.disabled = true;
+    const res = await fetch(`/api/passkeys/${encodeURIComponent(p.id)}`, { method: 'DELETE', credentials: 'same-origin' });
+    const data = await res.json().catch(() => ({}));
+    $('passkeyMsg').textContent = res.ok
+      ? `"${p.name}" 패스키를 지웠습니다. 다른 기기의 로그인 ${data.other_sessions_ended}개를 끊었습니다. 이 패스키로는 더 이상 로그인할 수 없습니다.`
+      : (data.error || '지우지 못했습니다.');
+    loadPasskeys();
+  });
+  return b;
 }
 
 function showLocked(message) {

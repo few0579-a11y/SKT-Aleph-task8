@@ -89,3 +89,10 @@
 /* 카드 3: 로그인 버튼 */
 .login-box { margin-top: 18px; display: grid; justify-items: center; gap: 8px; }
 .login-box + .auth-form { margin-top: 28px; padding-top: 22px; border-top: 1px solid var(--line); }
+
+/* 카드 4: 패스키 삭제 */
+.passkey-list li { grid-template-columns: 1fr auto; align-items: center; }
+.passkey-list li > div { display: grid; gap: 2px; }
+.passkey-delete.armed { background: #8a3b12; color: #fff; border-color: #8a3b12; }
+.passkey-delete:disabled { opacity: .45; cursor: not-allowed; }
+.passkey-hint { margin: 0 0 12px; font-size: 13px; color: var(--muted); }

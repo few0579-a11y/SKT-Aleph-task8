@@ -84,6 +84,7 @@ begin
   execute 'grant select, insert on all tables in schema t08 to t08_app';
   execute 'grant delete on t08.sessions to t08_app';
   execute 'grant update (sign_count, last_used_at, backed_up) on t08.passkeys to t08_app';
+  execute 'grant delete on t08.passkeys to t08_app';   -- 카드 4: 패스키 삭제
   execute 'grant update (used_at) on t08.challenges to t08_app';
   execute 'grant delete on t08.challenges to t08_app';
   execute 'grant usage, select on all sequences in schema t08 to t08_app';
