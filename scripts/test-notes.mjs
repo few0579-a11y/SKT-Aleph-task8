@@ -44,6 +44,17 @@ check('본문에 B를 적어 보내도 A 계정에 저장, B 건수 그대로', 
 const list = await call(`private?user_id=${b.data.user.id}`, undefined, a.cookie);
 check('주소에 B를 적어 조회해도 A 자료만', list.data.user.id === a.data.user.id && list.data.notes.length === 4, `${list.data.notes.length}건`);
 
+// 항목 1건 조회: 내 글 200, 남의 글 번호 404(없는 번호와 같은 응답), 로그인 없이 401
+const bNote = await call('private/notes', { kind: 'retro', title: 'B의 글', body: 'B만 보는 내용' }, b.cookie);
+const aNoteId = spoof.data.note.id;
+check('내 글 1건 조회 → 200', (await call(`private/notes/${aNoteId}`, undefined, a.cookie)).status === 200);
+const cross = await call(`private/notes/${bNote.data.note.id}`, undefined, a.cookie);
+check('A가 B 글 번호로 조회 → 404, 본문 없음', cross.status === 404 && !JSON.stringify(cross.data).includes('B만 보는'));
+check('B가 A 글 번호로 조회 → 404', (await call(`private/notes/${aNoteId}`, undefined, b.cookie)).status === 404);
+check('없는 번호 → 같은 404', (await call('private/notes/999999999', undefined, a.cookie)).status === 404);
+check('이상한 번호 → 400', (await call('private/notes/1%20or%201=1', undefined, a.cookie)).status === 400);
+check('로그인 없이 1건 조회 → 401', (await call(`private/notes/${aNoteId}`)).status === 401);
+
 console.log(`\n${pass} PASS / ${fail} FAIL`);
 await db.end();
 process.exit(fail ? 1 : 0);
