@@ -1,0 +1,91 @@
+/* T08 비공개 영역. 1번 소개 페이지의 색 변수(--accent 등)를 그대로 쓴다. */
+.nav-private { font-weight: 700; color: var(--accent); }
+
+.private-boundary {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin: 0 10vw;
+  padding: 36px 0 8px;
+  color: #8a3b12;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: .04em;
+}
+.private-boundary::before,
+.private-boundary::after {
+  content: "";
+  flex: 1;
+  border-top: 2px dashed #d9a585;
+}
+
+.private-section {
+  margin: 0 10vw 64px;
+  padding: 48px 40px;
+  border: 2px solid #e7c3ad;
+  border-radius: 28px;
+  background: repeating-linear-gradient(135deg, #fffaf6 0 18px, #fdf3ec 18px 36px);
+}
+.private-head h2 { margin: 4px 0 8px; }
+.private-lead, .private-fiction { margin: 0; color: var(--muted); }
+.private-fiction { font-size: 13px; margin-top: 6px; }
+
+.private-locked {
+  margin-top: 28px;
+  padding: 28px;
+  border-radius: 18px;
+  background: var(--paper);
+  border: 1px dashed #d9a585;
+  text-align: center;
+}
+.private-status { margin: 0; font-weight: 600; }
+
+.private-content { margin-top: 28px; }
+.private-user { margin-bottom: 18px; font-weight: 600; }
+.private-lists { display: grid; gap: 18px; grid-template-columns: repeat(3, 1fr); }
+.private-group { padding: 20px; border-radius: 18px; background: var(--paper); border: 1px solid var(--line); }
+.private-group h3 { margin: 0 0 10px; font-size: 16px; }
+.private-group ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 12px; }
+.private-group li strong { display: block; }
+.private-group li p { margin: 2px 0 0; white-space: pre-wrap; color: var(--muted); font-size: 14px; }
+.private-group li time { font-size: 12px; color: var(--muted); }
+
+.retro-form {
+  margin-top: 24px;
+  padding: 20px;
+  border-radius: 18px;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  display: grid;
+  gap: 10px;
+}
+.retro-form h3 { margin: 0; font-size: 16px; }
+.retro-form label { display: grid; gap: 4px; font-size: 14px; }
+.retro-form input, .retro-form textarea { font: inherit; padding: 8px 10px; border: 1px solid var(--line); border-radius: 10px; }
+.retro-form button { justify-self: start; }
+.private-msg { margin: 0; font-size: 14px; }
+
+@media (max-width: 760px) {
+  .private-boundary { margin: 0 6vw; }
+  .private-section { margin: 0 4vw 48px; padding: 32px 20px; }
+  .private-lists { grid-template-columns: 1fr; }
+}
+
+/* 카드 2: 가입 폼·패스키 목록 */
+.auth-form { margin: 22px auto 0; max-width: 420px; display: grid; gap: 10px; text-align: left; }
+.auth-form h3 { margin: 0; font-size: 16px; }
+.auth-help { margin: 0; font-size: 13px; color: var(--muted); }
+.auth-form label { display: grid; gap: 4px; font-size: 14px; }
+.auth-form input { font: inherit; padding: 8px 10px; border: 1px solid var(--line); border-radius: 10px; }
+.auth-form button { justify-self: start; }
+.private-user { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+.button.small { padding: 8px 16px; font-size: 14px; }
+.passkey-box { margin-bottom: 18px; padding: 20px; border-radius: 18px; background: var(--paper); border: 1px solid var(--line); }
+.passkey-box h3 { margin: 0 0 10px; font-size: 16px; }
+.passkey-list { margin: 0 0 12px; padding: 0; list-style: none; display: grid; gap: 8px; }
+.passkey-list li { display: grid; gap: 2px; padding: 10px 12px; border-radius: 12px; background: var(--bg); }
+.passkey-list li span { font-size: 13px; color: var(--muted); }
+
+/* 카드 3: 로그인 버튼 */
+.login-box { margin-top: 18px; display: grid; justify-items: center; gap: 8px; }
+.login-box + .auth-form { margin-top: 28px; padding-top: 22px; border-top: 1px solid var(--line); }
